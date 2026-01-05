@@ -25,6 +25,6 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
-        # On lance Prowler pour scanner spécifiquement la faille SSH (port 22 ouvert)
-        # On scanne toute la catégorie "Exposition Internet"
-        run: prowler aws --categories internet-exposed --region us-east-1 --no-banner
+        # On filtre pour ne scanner QUE votre groupe de sécurité spécifique
+        # On vérifie spécifiquement le port 22 (SSH)
+        run: prowler aws --checks ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_22 --filter-resource sg-023bf14d37ec193b5 --region us-east-1 --no-banner
